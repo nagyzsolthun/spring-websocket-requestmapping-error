@@ -1,0 +1,23 @@
+<div>This page sends both a HTTP GET and a WS request to /app</div>
+<script>
+
+function testRestEndpoint() {
+	const httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() { 
+	    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+	    	console.log("http GET response: " + httpRequest.responseText)
+	    }
+	}
+	httpRequest.open("GET", "/app", true); 
+	httpRequest.send();
+}
+
+function testWsEndpoint() {
+	const socket = new WebSocket('ws://localhost:8080/app');
+	socket.addEventListener('open', event => console.log("WS connection open"));
+}
+
+setTimeout(testRestEndpoint, 100);
+setTimeout(testWsEndpoint, 200);
+
+</script>
